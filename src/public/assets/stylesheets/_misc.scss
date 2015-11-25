@@ -1,0 +1,26 @@
+html, body {
+  font-family: "minerva-modern", sans-serif;
+}
+
+.logo {
+  padding-top: $header-height;
+}
+
+section {
+  margin-top: $header-height;
+  margin-bottom: $header-height;
+}
+
+h1 {
+  font-size: 48px;
+}
+
+.lead {
+  font-size: 30px;
+}
+
+.intro {
+  font-size: 25px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}

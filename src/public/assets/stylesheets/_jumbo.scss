@@ -1,0 +1,40 @@
+.jumbo {
+  background-image: url(../images/jumbo.png);
+  background-repeat: no-repeat;
+  width: 100%;
+  display: block;
+  content: "";
+  height: 500px;
+  margin-bottom: -100px;
+}
+
+.angle-container {
+  height: 350px;
+  position: relative;
+  z-index: 1;
+
+  &:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    overflow: visible;
+    width: 100%;
+    height: 100%;
+    background: black;
+    z-index: -1;
+    -webkit-transform: skewY(-9deg);
+    -moz-transform: skewY(-9deg);
+    -ms-transform: skewY(-9deg);
+    -o-transform: skewY(-9deg);
+    transform: skewY(-9deg);
+    -webkit-backface-visibility: hidden;
+  }
+
+  .angle {
+    color: #fff;
+    position: relative;
+    top: 33%;
+    background: black;
+  }
+}

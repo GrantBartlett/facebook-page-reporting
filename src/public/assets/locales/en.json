@@ -1,0 +1,21 @@
+{
+  "header": {
+    "language": "View in Arabic"
+  },
+  "enter": {
+    "title": "Are you ready?",
+    "lead": "Because we are.",
+    "body": "<strong>Unmissable offers</strong> and new <strong>collection alerts</strong> are just a few of the <strong>treats</strong> waiting for you! All we need to know is how to get in touch..."
+  },
+  "success": {
+    "title": "Epic",
+    "lead": "You are just moments away from <br>awesome collection alerts."
+  },
+  "form": {
+    "placeholder": "Enter an email address",
+    "submit": "Let's go"
+  },
+  "errors": {
+    "email": "Please enter an email address"
+  }
+}
