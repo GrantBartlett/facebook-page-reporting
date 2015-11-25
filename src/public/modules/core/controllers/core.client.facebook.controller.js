@@ -20,11 +20,13 @@ angular.module('Core').controller('FacebookController', ['$rootScope', '$scope',
             if ($scope.SDKReady) {
 
                 // Allow frontend selection of specific stats
-                var type = $scope.response.type;
+                var type = $scope.response.insightType;
+                var page = $scope.response.brand;
+                var url = "/" + page + "/" + "insights/" + type;
 
                 // Experimenting what stats we can get
                 FB.api(
-                    "/FG4Fashion/insights/" + type,
+                    url,
                     function (data) {
                         if (data && !data.error) {
 
@@ -33,6 +35,7 @@ angular.module('Core').controller('FacebookController', ['$rootScope', '$scope',
                         }
                     }
                 );
+
             } else {
                 alert('Please auth first');
             }

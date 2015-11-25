@@ -13,22 +13,25 @@
     </div>
 
     <div class="row">
-        <div class="col-md-4" ng-show="SDKReady">
+        <div class="col-md-12" ng-show="SDKReady">
             <h3>Insights API testing <span>Public metrics</span></h3>
 
             <div class="form-group">
                 <label id="brand" for="brand">Brand by page id</label>
-                <input name="brand" ng-model="response.brand" placeholder="E.g Fg4Fashion" class="form-control">
+                <select name="brand" ng-model="response.brand" class="form-control">
+                    <option value="381732402025965">Fg4 Fashion</option>
+                    <option value="186451331430379">Aldo Shoes (Saudi Arabia)</option>
+                </select>
             </div>
 
             <div class="form-group">
                 <label for="metrics">By public metrics</label>
-                <select id="metrics" ng-model="response.type" class="form-control">
+                <select id="metrics" ng-model="response.insightType" class="form-control">
                     <option value="page_fans_country">Page fans by country (Lifetime)</option>
                 </select>
             </div>
 
-            <a href="#" ng-click="getInsights()" class="btn btn-info">Get insights for {{ response.brand}}</a>
+            <a href="#" ng-click="getInsights()" class="btn btn-info">Get insights for page id: {{ response.brand}}</a>
 
             <pre>
                 {{ response.data }}
