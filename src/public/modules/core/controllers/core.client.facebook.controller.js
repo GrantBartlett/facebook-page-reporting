@@ -4,10 +4,39 @@
 angular.module('Core').controller('FacebookController', ['$rootScope', '$scope', '$state', '$stateParams', '$http', '$FB',
     function ($rootScope, $scope, $state, $stateParams, $http, $FB) {
 
-        $FB.hasLoaded();
+        // @TODO: Find way of getting promise from SDK without clicking button
+        // Then have a callback for checking sdk is ready and available
 
-        $scope.clickThis = function () {
-            $FB.hasLoaded();
+        $scope.auth = function () {
+            $FB.hasLoaded().then(function (response) {
+                if (response.status === 'connected') {
+                    $scope.SDKReady = true;
+                    $scope.user = response;
+                }
+            });
         };
+
+        $scope.getInsights = function () {
+            if ($scope.SDKReady) {
+
+                // Allow frontend selection of specific stats
+                var type = $scope.response.type;
+
+                // Experimenting what stats we can get
+                FB.api(
+                    "/FG4Fashion/insights/" + type,
+                    function (data) {
+                        if (data && !data.error) {
+
+                            $scope.response = data;
+                            $scope.$apply();
+                        }
+                    }
+                );
+            } else {
+                alert('Please auth first');
+            }
+        }
+
     }
 ]);

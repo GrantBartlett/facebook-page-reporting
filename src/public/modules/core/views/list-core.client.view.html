@@ -2,16 +2,37 @@
 
     <div class="row">
         <div class="col-md-4">
-            <h3>Brand lookup</h3>
+            <h3>Auth</h3>
+            <p>You are logged in as...</p>
+            <ul class="list-unstyled">
+                <li>Facebook User ID: <span class="label label-primary">{{ user.authResponse.userID}}</span></li>
+                <li>Status: <span class="label label-success">{{ user.status}}</span></li>
+            </ul>
+            <button class="btn btn-success" ng-click="auth()" ng-disabled="SDKReady">Auth connect to Facebook</button>
+        </div>
+    </div>
 
-            <div class="form-inline">
-                <form ng-submit="searchApi()">
-                    <input ng-model="page.name" class="form-control" placeholder="Enter a brand name">
-                    <button class="btn btn-success">Search</button>
-                </form>
+    <div class="row">
+        <div class="col-md-4" ng-show="SDKReady">
+            <h3>Insights API testing <span>Public metrics</span></h3>
+
+            <div class="form-group">
+                <label id="brand" for="brand">Brand by page id</label>
+                <input name="brand" ng-model="response.brand" placeholder="E.g Fg4Fashion" class="form-control">
             </div>
 
-            <button class="btn btn-success" ng-click="clickThis()">CLICK ME</button>
+            <div class="form-group">
+                <label for="metrics">By public metrics</label>
+                <select id="metrics" ng-model="response.type" class="form-control">
+                    <option value="page_fans_country">Page fans by country (Lifetime)</option>
+                </select>
+            </div>
+
+            <a href="#" ng-click="getInsights()" class="btn btn-info">Get insights for {{ response.brand}}</a>
+
+            <pre>
+                {{ response.data }}
+            </pre>
         </div>
     </div>
 
