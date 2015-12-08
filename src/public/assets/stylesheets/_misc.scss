@@ -2,6 +2,14 @@ html, body {
   font-family: "minerva-modern", sans-serif;
 }
 
+.loader {
+  position: absolute;
+  opacity: 0.3;
+  left: 0;
+  right: 0;
+  top: 250px;
+}
+
 .logo {
   padding-top: $header-height;
 }

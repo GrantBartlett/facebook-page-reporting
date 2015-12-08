@@ -1,42 +1,71 @@
-<div class="container" ng-controller="FacebookController">
-
+<div class="container" ng-controller="FacebookController" ng-show="fbReady">
     <div class="row">
-        <div class="col-md-4">
-            <h3>Auth</h3>
-            <p>You are logged in as...</p>
-            <ul class="list-unstyled">
-                <li>Facebook User ID: <span class="label label-primary">{{ user.authResponse.userID}}</span></li>
-                <li>Status: <span class="label label-success">{{ user.status}}</span></li>
-            </ul>
-            <button class="btn btn-success" ng-click="auth()" ng-disabled="SDKReady">Auth connect to Facebook</button>
-        </div>
-    </div>
+        <div class="col-md-12">
+            <h3>Insights</h3>
 
-    <div class="row">
-        <div class="col-md-12" ng-show="SDKReady">
-            <h3>Insights API testing <span>Public metrics</span></h3>
-
-            <div class="form-group">
-                <label id="brand" for="brand">Brand by page id</label>
-                <select name="brand" ng-model="response.brand" class="form-control">
-                    <option value="381732402025965">Fg4 Fashion</option>
-                    <option value="186451331430379">Aldo Shoes (Saudi Arabia)</option>
-                </select>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label id="brand" for="brand">Select a Page</label>
+                        <select name="brand" ng-model="response.brand" class="form-control">
+                            <option value="186451331430379">Aldo Shoes</option>
+                            <option value="381732402025965">Fg4 Fashion</option>
+                        </select>
+                    </div>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="metrics">By public metrics</label>
-                <select id="metrics" ng-model="response.insightType" class="form-control">
-                    <option value="page_fans_country">Page fans by country (Lifetime)</option>
-                </select>
+            <a href="#" ng-click="byId()" class="btn btn-black">Generate Report by Post Id s<i
+                    class="fa fa-flask"></i></a>
+
+            <a href="#" ng-click="getInsights()" ng-show="response.brand" class="btn btn-black">Generate Report <i
+                    class="fa fa-flask"></i></a>
+
+
+            <div class="row">
+                <div class="col-md-4">
+                    <a ng-click="showAll=!showAll">Show all results?</a>
+
+                    <div class="col-md-12" ng-show="showAll">
+                        <table class="table table-condensed" ng-repeat="(key, value) in response.data">
+                            <thead>
+                            <tr>
+                                <th>{{ value.title }}</th>
+                                <th>{{ value.period }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="(k,v) in value.values">
+                                <td>{{ v.value }}</td>
+                                <td>{{ v.end_time | date : medium}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <a ng-click="showReport=!showReport">Show Monthly Report</a>
+
+                    <div class="col-md-12">
+
+                        <ul class="list-unstyled">
+                            <li ng-repeat="(key, value) in response.data">
+                                {{ value.title }}
+
+                            </li>
+                        </ul>
+
+                    </div>
+
+                </div>
+
             </div>
 
-            <a href="#" ng-click="getInsights()" class="btn btn-info">Get insights for page id: {{ response.brand}}</a>
-
-            <pre>
+            <h3>Raw response</h3>
+            <pre style="height:250px;overflow:scroll">
                 {{ response.data }}
             </pre>
         </div>
     </div>
-
 </div>

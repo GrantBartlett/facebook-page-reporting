@@ -1,45 +1,76 @@
 'use strict';
 
 // Facebook controller
-angular.module('Core').controller('FacebookController', ['$rootScope', '$scope', '$state', '$stateParams', '$http', '$FB',
-    function ($rootScope, $scope, $state, $stateParams, $http, $FB) {
+angular.module('Core').controller('FacebookController', ['$rootScope', '$scope', '$state', '$stateParams', '$http', '$facebook',
+    function ($rootScope, $scope, $state, $stateParams, $http, $facebook) {
 
-        // @TODO: Find way of getting promise from SDK without clicking button
-        // Then have a callback for checking sdk is ready and available
+        $rootScope.loading = true;
 
-        $scope.auth = function () {
-            $FB.hasLoaded().then(function (response) {
+        $facebook.getLoginStatus().then(
+            function (response) {
                 if (response.status === 'connected') {
-                    $scope.SDKReady = true;
-                    $scope.user = response;
+                    console.log('Logged in.');
                 }
+                else {
+                    FB.login();
+                }
+            },
+            function (error) {
+                console.log('error', error);
+            }
+        );
+
+        $facebook.api("/me").then(
+            function (response) {
+                $rootScope.fbReady = true;
+                $rootScope.loading = false;
+                $rootScope.user = response;
+            },
+            function (err) {
+                console.log(err);
+                $rootScope.loading = false;
+                $rootScope.fbReady = false;
             });
-        };
 
-        $scope.getInsights = function () {
-            if ($scope.SDKReady) {
-
-                // Allow frontend selection of specific stats
-                var type = $scope.response.insightType;
+        $scope.byId = function () {
+            if ($rootScope.fbReady) {
                 var page = $scope.response.brand;
-                var url = "/" + page + "/" + "insights/" + type;
+                var url = "/" + page + "/" + "feed";
 
-                // Experimenting what stats we can get
-                FB.api(
+                $facebook.api(
                     url,
-                    function (data) {
-                        if (data && !data.error) {
-
-                            $scope.response = data;
-                            $scope.$apply();
+                    function (response) {
+                        if (response && !response.error) {
+                            /* handle the result */
+                            console.log(response);
+                        } else {
+                            console.log(response);
+                            console.log('err');
                         }
                     }
                 );
+            }
+        };
 
-            } else {
-                alert('Please auth first');
+        $scope.getInsights = function () {
+            if ($rootScope.fbReady) {
+
+                // Page to generate insights for
+
+                var page = $scope.response.brand;
+                var url = "/" + page + "/" + "insights/";
+
+
+                // Experimenting what stats we can get
+                $facebook.api(url).then(
+                    function (response) {
+                        $scope.response = response;
+                    },
+                    function (error) {
+                        console.log(error);
+                    }
+                );
             }
         }
-
     }
 ]);

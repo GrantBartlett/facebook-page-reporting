@@ -15,7 +15,6 @@ form {
 }
 
 .btn-black {
-  @extend .btn-block;
   @extend .btn-default;
   background-color: black;
   border-color: black;
@@ -45,7 +44,6 @@ form {
   }
   .btn-black {
     display: inline-block;
-    width: 100px;
   }
 }
 

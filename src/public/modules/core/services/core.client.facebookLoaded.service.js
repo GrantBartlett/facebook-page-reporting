@@ -6,6 +6,7 @@ angular.module('Core')
 
                 if (window.FB) {
                     FB.init();
+                    FB.login(function(){}, {scope: 'read_insights'});
                     FB.getLoginStatus(function (response) {
                         if (response.status === 'connected') {
                             console.log(response, 'success');
@@ -17,11 +18,8 @@ angular.module('Core')
                             FB.login();
                         }
                     });
-
                     return deferred.promise;
                 }
             }
         }
     }]);
-
-
