@@ -15,57 +15,85 @@
                 </div>
             </div>
 
-            <a href="#" ng-click="byId()" class="btn btn-black">Generate Report by Post Id s<i
-                    class="fa fa-flask"></i></a>
+            <a href="#" ng-click="getPosts()" ng-show="response.brand" class="btn btn-black">
+                Get Posts
+                <i class="fa fa-flask"></i>
+            </a>
 
-            <a href="#" ng-click="getInsights()" ng-show="response.brand" class="btn btn-black">Generate Report <i
-                    class="fa fa-flask"></i></a>
+            <a href="#" ng-click="getInsights()" ng-show="response.brand" class="btn btn-black">
+                Get Insights
+                <i class="fa fa-flask"></i>
+            </a>
 
 
-            <div class="row">
-                <div class="col-md-4">
-                    <a ng-click="showAll=!showAll">Show all results?</a>
+            <div class="row" ng-controller="OrganicPosts">
+                <div class="col-md-12">
 
-                    <div class="col-md-12" ng-show="showAll">
-                        <table class="table table-condensed" ng-repeat="(key, value) in response.data">
-                            <thead>
-                            <tr>
-                                <th>{{ value.title }}</th>
-                                <th>{{ value.period }}</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr ng-repeat="(k,v) in value.values">
-                                <td>{{ v.value }}</td>
-                                <td>{{ v.end_time | date : medium}}</td>
-                            </tr>
-                            </tbody>
-                        </table>
+                    <h4>Best Organic Facebook Posts</h4>
+
+                    <a href="#" ng-click="getPosts()" class="btn btn-black">
+                        Get Best Organic Posts
+                        <i class="fa fa-flask"></i>
+                    </a>
+
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3" ng-repeat="(key, value) in bestOrganicPosts">
+                            <div class="thumbnail" style="position:relative">
+
+                                <span class="label label-danger" style="position:absolute;right:10px;top:10px">Promotion Status: {{ value.promotion_status}}</span>
+
+                                <img ng-src="{{ value.full_picture }}">
+
+                                <div class="caption">
+                                    <h3 ng-bind="value.message"></h3>
+
+                                    <hr>
+                                    Original actions
+                                    <ul class="list-inline">
+                                        <li ng-show="value.actions.like"><i class="fa fa-thumbs-o-up"></i>
+                                           {{ value.actions.like }}
+                                        </li>
+                                        <li ng-show="value.actions.comment"><i class="fa fa-comment-o"></i>
+                                            {{ value.actions.comment }}
+                                        </li>
+                                        <li ng-show="value.actions.share"><i class="fa fa-share"></i>
+                                            {{ value.actions.share }}
+                                        </li>
+                                        <li ng-show="value.actions.clicks"><i class="fa fa-link"></i>
+                                            {{ value.actions.clicks}}
+                                        </li>
+                                    </ul>
+
+                                    <hr>
+                                    Algorithm score action breakdown
+                                    <ul class="list-inline">
+                                        <li>
+                                            <i class="fa fa-thumbs-o-up"></i>
+                                            {{ value.scores.like }}
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-comment-o"></i>
+                                            {{ value.scores.comment }}
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-share"></i>
+                                            {{ value.scores.share }}
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-link"></i>
+                                            {{ value.scores.clicks }}
+                                        </li>
+                                        <li>
+                                            <strong>Total: {{ value.total }}</strong>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-                <div class="col-md-4">
-                    <a ng-click="showReport=!showReport">Show Monthly Report</a>
-
-                    <div class="col-md-12">
-
-                        <ul class="list-unstyled">
-                            <li ng-repeat="(key, value) in response.data">
-                                {{ value.title }}
-
-                            </li>
-                        </ul>
-
-                    </div>
-
-                </div>
-
             </div>
-
-            <h3>Raw response</h3>
-            <pre style="height:250px;overflow:scroll">
-                {{ response.data }}
-            </pre>
         </div>
     </div>
 </div>
