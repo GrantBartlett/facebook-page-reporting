@@ -8,7 +8,6 @@ angular.module('Core').controller('FacebookController', ['$rootScope', '$scope',
         facebookLogin.getStatus()
             .then(function (response) {
                 if (response.status === 'connected') {
-
                     $facebook.api("/me").then(
                         function (response) {
                             $rootScope.user = response;

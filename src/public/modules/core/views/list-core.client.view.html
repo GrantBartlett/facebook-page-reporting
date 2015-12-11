@@ -1,7 +1,6 @@
 <div class="container" ng-controller="FacebookController" ng-show="fbReady">
     <div class="row">
         <div class="col-md-12">
-            <h3>Insights</h3>
 
             <div class="row">
                 <div class="col-md-4">
@@ -15,21 +14,8 @@
                 </div>
             </div>
 
-            <a href="#" ng-click="getPosts()" ng-show="response.brand" class="btn btn-black">
-                Get Posts
-                <i class="fa fa-flask"></i>
-            </a>
-
-            <a href="#" ng-click="getInsights()" ng-show="response.brand" class="btn btn-black">
-                Get Insights
-                <i class="fa fa-flask"></i>
-            </a>
-
-
             <div class="row" ng-controller="OrganicPosts">
                 <div class="col-md-12">
-
-                    <h4>Best Organic Facebook Posts</h4>
 
                     <a href="#" ng-click="getPosts()" class="btn btn-black">
                         Get Best Organic Posts
@@ -38,57 +24,94 @@
 
                     <div class="row">
                         <div class="col-md-6 col-md-offset-3" ng-repeat="(key, value) in bestOrganicPosts">
-                            <div class="thumbnail" style="position:relative">
+                            <div class="thumbnail">
 
-                                <span class="label label-danger" style="position:absolute;right:10px;top:10px">Promotion Status: {{ value.promotion_status}}</span>
-
-                                <img ng-src="{{ value.full_picture }}">
-
-                                <div class="caption">
-                                    <h3 ng-bind="value.message"></h3>
-
-                                    <hr>
-                                    Original actions
-                                    <ul class="list-inline">
-                                        <li ng-show="value.actions.like"><i class="fa fa-thumbs-o-up"></i>
-                                           {{ value.actions.like }}
+                                <div style="position:relative">
+                                    <ul class="list-inline" style="position:absolute;right:10px;top:10px">
+                                        <li>
+                                            <span class="label label-info">
+                                                <i class="fa fa-bolt"></i>
+                                                {{ value.scores.engagement }}% engagement
+                                            </span>
                                         </li>
-                                        <li ng-show="value.actions.comment"><i class="fa fa-comment-o"></i>
-                                            {{ value.actions.comment }}
-                                        </li>
-                                        <li ng-show="value.actions.share"><i class="fa fa-share"></i>
-                                            {{ value.actions.share }}
-                                        </li>
-                                        <li ng-show="value.actions.clicks"><i class="fa fa-link"></i>
-                                            {{ value.actions.clicks}}
+
+                                        <li>
+                                            <span class="label label-info">
+                                                <i class="fa fa-bar-chart"></i>
+                                                {{ value.organic_score }} algo score
+                                            </span>
                                         </li>
                                     </ul>
 
-                                    <hr>
-                                    Algorithm score action breakdown
-                                    <ul class="list-inline">
-                                        <li>
-                                            <i class="fa fa-thumbs-o-up"></i>
-                                            {{ value.scores.like }}
-                                        </li>
-                                        <li>
-                                            <i class="fa fa-comment-o"></i>
-                                            {{ value.scores.comment }}
-                                        </li>
-                                        <li>
-                                            <i class="fa fa-share"></i>
-                                            {{ value.scores.share }}
-                                        </li>
-                                        <li>
-                                            <i class="fa fa-link"></i>
-                                            {{ value.scores.clicks }}
-                                        </li>
-                                        <li>
-                                            <strong>Total: {{ value.total }}</strong>
-                                        </li>
-                                    </ul>
+                                    <img ng-src="{{ value.full_picture }}" style="width:100%;">
+
+                                    <div class="caption"
+                                         style="color: white;background: rgba(5, 59, 105, 0.83);width: 100%;position: absolute;bottom: 0;">
+                                        <div style="padding: 20px;">
+                                            <ul class="list-inline">
+                                                <li ng-show="value.actions.like"><i class="fa fa-thumbs-o-up"></i>
+                                                    {{ value.actions.like }}
+                                                </li>
+                                                <li ng-show="value.actions.comment"><i class="fa fa-comment-o"></i>
+                                                    {{ value.actions.comment }}
+                                                </li>
+                                                <li ng-show="value.actions.share"><i class="fa fa-share"></i>
+                                                    {{ value.actions.share }}
+                                                </li>
+                                                <li ng-show="value.actions.clicks"><i class="fa fa-link"></i>
+                                                    {{ value.actions.clicks}}
+                                                </li>
+                                                <li class="pull-right text-right">
+                                                    <span class="label label-danger"
+                                                          ng-show="value.post_impressions_paid_unique > 0">
+                                                        Paid Post
+                                                    </span>
+                                                    <span class="label label-default"
+                                                          ng-show="value.post_impressions_paid_unique <= 0">
+                                                        Organic Post
+                                                    </span>
+                                                </li>
+                                            </ul>
+
+                                            <a href="#" ng-click="showAll=!showAll" ng-hide="showAll"
+                                               style="color:white">
+                                                Show Algorithm Breakdown
+                                            </a>
+
+                                            <ul class="list-inline" ng-show="showAll" style="margin-top:10px;">
+                                                <li>
+                                                    <i class="fa fa-thumbs-o-up"></i>
+                                                    {{ value.scores.like }}
+                                                </li>
+                                                <li>
+                                                    <i class="fa fa-comment-o"></i>
+                                                    {{ value.scores.comment }}
+                                                </li>
+                                                <li>
+                                                    <i class="fa fa-share"></i>
+                                                    {{ value.scores.share }}
+                                                </li>
+                                                <li>
+                                                    <i class="fa fa-link"></i>
+                                                    {{ value.scores.clicks }}
+                                                </li>
+
+                                            </ul>
+
+                                            <ul class="list-inline" ng-show="showAll">
+                                                <li>
+                                                    <i class="fa fa-bolt"></i>
+                                                    {{ value.scores.engagement }}% engagement
+                                                </li>
+                                                <li>
+                                                    <i class="fa fa-bar-chart"></i>
+                                                    {{ value.actions.post_impressions_unique }} impressions
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                    </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>

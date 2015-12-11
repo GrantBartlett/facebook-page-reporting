@@ -10,6 +10,11 @@ angular.module('Core')
                     function (response) {
                         if (response.status === 'connected') {
                             deferred.resolve(response);
+                            $facebook.login().then(function (response) {
+                                // handle the response
+                                console.log(response);
+                            }, {scope: 'publish_actions, manage_pages, publish_pages, user_photos, read_insights'});
+
                             $rootScope.fbReady = true;
                             $rootScope.loading = false;
                         }
@@ -17,7 +22,7 @@ angular.module('Core')
                             $facebook.login().then(function (response) {
                                 // handle the response
                                 console.log(response);
-                            }, {scope: 'manage_pages,read_insights'});
+                            }, {scope: 'publish_actions, manage_pages, publish_pages, user_photos, read_insights'});
                             deferred.reject('Error occurred, user not logged in');
                         }
                     },
