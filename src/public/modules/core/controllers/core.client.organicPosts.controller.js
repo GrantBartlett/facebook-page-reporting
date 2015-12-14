@@ -95,6 +95,7 @@ angular.module('Core').controller('OrganicPosts', ['$rootScope', '$scope', '$sta
             });
 
             $scope.bestOrganicPosts = _.sortByOrder(organicScores, ['post_impressions_paid_unique', 'scores.engagement', 'organic_score'], ['asc', 'desc', 'desc']);
+            $scope.bestPaidPosts = _.sortByOrder(organicScores, ['post_impressions_paid_unique', 'scores.engagement', 'organic_score'], ['desc', 'desc', 'desc']);
             console.log($scope.bestOrganicPosts);
         };
     }
